@@ -1,38 +1,47 @@
 package contas
 
+import "banco/clientes"
+
 type ContaCorrente struct {
-	Titular       string
-	NumeroAgencia int
-	NumeroConta   int
-	Saldo         float64
+	Titular          clientes.Titular
+	NumeroAgencia    int
+	NumeroConta      int
+	saldo            float64
 }
 
 func (c *ContaCorrente) Sacar(valordoSaque float64) string {
-	podeSacar := valordoSaque > 0 && valordoSaque <= c.Saldo
+	podeSacar := valordoSaque > 0 && valordoSaque <= c.saldo
 	if podeSacar {
-		c.Saldo -= valordoSaque
+		c.saldo -= valordoSaque
 		return "Saque realizado com sucesso!!"
 	} else {
-		return "Saldo insuficiente"
+		return "saldo insuficiente"
 	}
 }
 
 func (c *ContaCorrente) Depositar(valordoDeposito float64) (string, float64) {
 	if valordoDeposito > 0 {
-		c.Saldo += valordoDeposito
-		return "Deposito realizado com sucesso!!", c.Saldo
+		c.saldo += valordoDeposito
+		return "Deposito realizado com sucesso!!", c.saldo
 	} else {
-		return "O valor do deposito menor que 0", c.Saldo
+		return "O valor do deposito menor que 0", c.saldo
 	}
 
 }
 
 func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *ContaCorrente) bool {
-	if valorTransferencia < c.Saldo && valorTransferencia > 0 {
-		c.Saldo -= valorTransferencia
+	if valorTransferencia < c.saldo && valorTransferencia > 0 {
+		c.saldo -= valorTransferencia
 		contaDestino.Depositar(valorTransferencia)
 		return true
 	} else {
 		return false
 	}
+}
+
+
+func (c *ContaCorrente) ObterSaldo() float64{
+
+	return c.saldo
+
 }
