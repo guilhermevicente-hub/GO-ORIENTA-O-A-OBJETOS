@@ -3,10 +3,9 @@ package contas
 import "banco/clientes"
 
 type ContaCorrente struct {
-	Titular          clientes.Titular
-	NumeroAgencia    int
-	NumeroConta      int
-	saldo            float64
+	Titular                    clientes.Titular
+	NumeroAgencia, NumeroConta int
+	saldo                      float64
 }
 
 func (c *ContaCorrente) Sacar(valordoSaque float64) string {
@@ -39,8 +38,7 @@ func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *Con
 	}
 }
 
-
-func (c *ContaCorrente) ObterSaldo() float64{
+func (c *ContaCorrente) ObterSaldo() float64 {
 
 	return c.saldo
 
